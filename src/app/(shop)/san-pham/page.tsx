@@ -5,6 +5,7 @@ import { getCategories, getProducts } from "@/lib/data";
 import { filterProducts, parseCatalogQuery, SORT_OPTIONS } from "@/lib/catalog";
 import { ProductGrid } from "@/components/shop/product-card";
 import { Breadcrumbs } from "@/components/shop/breadcrumbs";
+import { FilterPanel } from "@/components/shop/filter-panel";
 
 export const metadata: Metadata = {
   title: "Tất cả sản phẩm",
@@ -42,7 +43,8 @@ async function Catalog({ searchParams }: { searchParams: PageProps<"/san-pham">[
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[260px_1fr]">
         {/* Plain GET form: filters work without JavaScript and every state is a shareable URL. */}
-        <form className="card h-fit space-y-5 p-5 lg:sticky lg:top-24" aria-label="Bộ lọc sản phẩm">
+        <FilterPanel activeCount={[query.q, query.category, query.min, query.max, query.inStock || undefined].filter((v) => v !== undefined && v !== "").length}>
+        <form className="card space-y-5 p-5" aria-label="Bộ lọc sản phẩm">
           <div>
             <label htmlFor="f-q" className="label">Từ khóa</label>
             <input id="f-q" name="q" type="search" defaultValue={query.q} className="input" placeholder="VD: máy in resin" />
@@ -76,8 +78,10 @@ async function Catalog({ searchParams }: { searchParams: PageProps<"/san-pham">[
             <Link href="/san-pham" className="btn-ghost">Xóa</Link>
           </div>
         </form>
+        </FilterPanel>
 
-        <section aria-label="Danh sách sản phẩm">
+        <section aria-labelledby="results-heading">
+          <h2 id="results-heading" className="sr-only">Danh sách sản phẩm</h2>
           {results.length ? (
             <ProductGrid products={results} priorityCount={4} />
           ) : (

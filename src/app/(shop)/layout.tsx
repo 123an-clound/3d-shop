@@ -1,5 +1,6 @@
 import { Header } from "@/components/shop/header";
 import { Footer } from "@/components/shop/footer";
+import { MobileCta } from "@/components/shop/mobile-cta";
 
 export default function ShopLayout({ children }: LayoutProps<"/">) {
   return (
@@ -9,6 +10,7 @@ export default function ShopLayout({ children }: LayoutProps<"/">) {
         {children}
       </main>
       <Footer />
+      <MobileCta />
     </>
   );
 }

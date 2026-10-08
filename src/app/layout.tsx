@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, Space_Grotesk } from "next/font/google";
 import { getSettings } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
+import { Analytics } from "@/components/analytics";
 import "./globals.css";
 
 const body = Be_Vietnam_Pro({
@@ -35,7 +36,10 @@ export const viewport: Viewport = { themeColor: "#0b0d12" };
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="vi" className={`${body.variable} ${display.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

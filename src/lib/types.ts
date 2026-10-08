@@ -62,7 +62,19 @@ export type OrderItem = {
 /* ---- shop3d_settings values ---- */
 
 export type SiteSettings = { name: string; tagline: string; description: string; logo_url: string };
-export type ContactSettings = { phone: string; email: string; address: string; zalo: string; facebook: string; hours: string };
+export type ContactSettings = {
+  phone: string;
+  email: string;
+  address: string;
+  zalo: string;
+  facebook: string;
+  hours: string;
+  /** e.g. "Phản hồi trong 30 phút (giờ hành chính)" — shown next to contact CTAs */
+  response_time: string;
+  /** Optional coordinates for LocalBusiness schema and a precise map pin */
+  lat: string;
+  lng: string;
+};
 export type HeroSettings = {
   eyebrow: string;
   title: string;
@@ -85,6 +97,9 @@ export type SectionSettings = {
 };
 export type ShippingSettings = { flat_fee: number; free_threshold: number };
 export type BankSettings = { bank_name: string; account_number: string; account_name: string };
+export type FaqItem = { q: string; a: string };
+/** Plain-text policy pages; an empty value hides that page from the footer. */
+export type PolicySettings = { privacy: string; returns: string };
 
 export type Settings = {
   site: SiteSettings;
@@ -94,6 +109,8 @@ export type Settings = {
   sections: SectionSettings;
   shipping: ShippingSettings;
   bank: BankSettings;
+  faq: FaqItem[];
+  policies: PolicySettings;
 };
 
 export type SettingsKey = keyof Settings;

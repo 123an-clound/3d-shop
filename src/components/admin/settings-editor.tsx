@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useId, useState, useTransition } from "react";
 import { saveSettings } from "@/app/admin/actions";
-import type { Banner, Highlight, Settings, SettingsKey } from "@/lib/types";
+import type { Banner, FaqItem, Highlight, Settings, SettingsKey } from "@/lib/types";
 import { ImageListEditor } from "./image-list-editor";
 
 /** One card per settings key; each saves independently so a validation error in one never blocks the others. */
@@ -30,6 +30,34 @@ export function SettingsEditor({ initial }: { initial: Settings }) {
         <Text label="Địa chỉ" value={s.contact.address} onChange={(v) => patch("contact", { address: v })} />
         <Text label="Facebook (URL)" value={s.contact.facebook} onChange={(v) => patch("contact", { facebook: v })} />
         <Text label="Giờ mở cửa" value={s.contact.hours} onChange={(v) => patch("contact", { hours: v })} />
+        <Text label="Cam kết thời gian phản hồi (VD: Phản hồi trong 30 phút)" value={s.contact.response_time} onChange={(v) => patch("contact", { response_time: v })} />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Text label="Vĩ độ (lat, tùy chọn)" value={s.contact.lat} onChange={(v) => patch("contact", { lat: v })} />
+          <Text label="Kinh độ (lng, tùy chọn)" value={s.contact.lng} onChange={(v) => patch("contact", { lng: v })} />
+        </div>
+        <p className="text-xs text-muted">Lấy tọa độ: Google Maps → nhấn chuột phải vào cửa hàng → bấm vào dòng số đầu tiên để sao chép.</p>
+      </Section>
+
+      <Section title="Câu hỏi thường gặp (FAQ)" k="faq" value={s.faq}>
+        <ListEditor<FaqItem>
+          label="Câu hỏi"
+          items={s.faq}
+          empty={{ q: "", a: "" }}
+          max={30}
+          onChange={(faq) => setS((prev) => ({ ...prev, faq }))}
+          render={(f, set) => (
+            <>
+              <Text label="Câu hỏi" value={f.q} onChange={(v) => set({ ...f, q: v })} />
+              <Text label="Trả lời" value={f.a} onChange={(v) => set({ ...f, a: v })} multiline />
+            </>
+          )}
+        />
+      </Section>
+
+      <Section title="Trang chính sách" k="policies" value={s.policies}>
+        <p className="text-xs text-muted">Để trống = ẩn trang. Xuống dòng được giữ nguyên khi hiển thị.</p>
+        <Text label="Chính sách bảo mật" value={s.policies.privacy} onChange={(v) => patch("policies", { privacy: v })} multiline rows={12} />
+        <Text label="Chính sách đổi trả & bảo hành" value={s.policies.returns} onChange={(v) => patch("policies", { returns: v })} multiline rows={12} />
       </Section>
 
       <Section title="Banner chính (Hero)" k="hero" value={s.hero}>
@@ -148,13 +176,13 @@ function Section<K extends SettingsKey>({ title, k, value, children }: { title: 
   );
 }
 
-function Text({ label, value, onChange, multiline, type = "text" }: { label: string; value: string; onChange: (v: string) => void; multiline?: boolean; type?: string }) {
+function Text({ label, value, onChange, multiline, rows = 3, type = "text" }: { label: string; value: string; onChange: (v: string) => void; multiline?: boolean; rows?: number; type?: string }) {
   const id = useId();
   return (
     <div>
       <label htmlFor={id} className="label">{label}</label>
       {multiline ? (
-        <textarea id={id} rows={3} value={value} onChange={(e) => onChange(e.target.value)} className="input py-2.5" />
+        <textarea id={id} rows={rows} value={value} onChange={(e) => onChange(e.target.value)} className="input py-2.5" />
       ) : (
         <input id={id} type={type} value={value} onChange={(e) => onChange(e.target.value)} className="input" />
       )}

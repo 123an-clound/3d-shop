@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { getCategories, getSettings } from "@/lib/data";
 import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/icons";
+import { POLICY_PAGES } from "./policy-page";
 
 export async function Footer() {
-  const [{ site, contact }, categories] = await Promise.all([getSettings(), getCategories()]);
+  const [{ site, contact, policies }, categories] = await Promise.all([getSettings(), getCategories()]);
 
   return (
     <footer className="mt-24 border-t border-line bg-surface/60">
@@ -39,7 +40,17 @@ export async function Footer() {
         </div>
       </div>
       <div className="border-t border-line">
-        <p className="container-x py-5 text-xs text-muted">© {site.name}. Bảo lưu mọi quyền.</p>
+        <div className="container-x flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-muted">
+          <p>© {site.name}. Bảo lưu mọi quyền.</p>
+          <nav aria-label="Chính sách" className="flex flex-wrap gap-x-5 gap-y-2">
+            {(Object.keys(POLICY_PAGES) as (keyof typeof POLICY_PAGES)[])
+              .filter((k) => policies[k].trim())
+              .map((k) => (
+                <Link key={k} href={POLICY_PAGES[k].href} className="hover:text-fg">{POLICY_PAGES[k].title}</Link>
+              ))}
+            <Link href="/lien-he" className="hover:text-fg">Liên hệ</Link>
+          </nav>
+        </div>
       </div>
     </footer>
   );

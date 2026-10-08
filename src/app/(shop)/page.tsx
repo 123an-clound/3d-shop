@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCategories, getProducts, getSettings } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
 import { safeHref } from "@/lib/url";
+import { mapLinks } from "@/lib/contact";
 import { ProductGrid } from "@/components/shop/product-card";
 import { PrintCube } from "@/components/shop/print-cube";
 import { JsonLd } from "@/components/json-ld";
@@ -30,6 +31,8 @@ export default async function HomePage() {
               ...(contact.phone && { telephone: contact.phone }),
               ...(contact.email && { email: contact.email }),
               ...(contact.address && { address: { "@type": "PostalAddress", streetAddress: contact.address, addressCountry: "VN" } }),
+              ...(contact.lat && contact.lng && { geo: { "@type": "GeoCoordinates", latitude: Number(contact.lat), longitude: Number(contact.lng) } }),
+              ...(mapLinks(contact) && { hasMap: mapLinks(contact)!.directions }),
             },
             {
               "@type": "WebSite",

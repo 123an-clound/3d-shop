@@ -52,6 +52,9 @@ export const settingsSchemas = {
     zalo: text(30),
     facebook: link,
     hours: text(100),
+    response_time: text(120),
+    lat: z.union([z.literal(""), z.string().trim().regex(/^-?\d{1,2}(\.\d+)?$/, "Vĩ độ không hợp lệ")]),
+    lng: z.union([z.literal(""), z.string().trim().regex(/^-?\d{1,3}(\.\d+)?$/, "Kinh độ không hợp lệ")]),
   }),
   hero: z.object({
     eyebrow: text(80),
@@ -74,4 +77,6 @@ export const settingsSchemas = {
   }),
   shipping: z.object({ flat_fee: money, free_threshold: money }),
   bank: z.object({ bank_name: text(100), account_number: text(40), account_name: text(100) }),
+  faq: z.array(z.object({ q: text(200).min(1), a: text(2000).min(1) })).max(30),
+  policies: z.object({ privacy: text(20_000), returns: text(20_000) }),
 } as const;

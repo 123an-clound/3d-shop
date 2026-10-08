@@ -24,15 +24,25 @@ export function RealtimeRefresh({ tables }: { tables: Table[] }) {
       timer = setTimeout(() => router.refresh(), 300);
     };
 
-    const channel = supabase.channel(`admin-${key}`);
-    for (const table of key.split(",")) {
-      channel.on("postgres_changes", { event: "*", schema: "public", table }, refresh);
-    }
-    channel.subscribe((status) => setLive(status === "SUBSCRIBED"));
+    let channel: ReturnType<typeof supabase.channel> | undefined;
+    let cancelled = false;
+
+    (async () => {
+      // Join with the admin's JWT: postgres_changes are filtered by RLS, and an anon join would receive nothing.
+      const { data } = await supabase.auth.getSession();
+      if (cancelled) return;
+      if (data.session) await supabase.realtime.setAuth(data.session.access_token);
+      channel = supabase.channel(`admin-${key}`);
+      for (const table of key.split(",")) {
+        channel.on("postgres_changes", { event: "*", schema: "public", table }, refresh);
+      }
+      channel.subscribe((status) => setLive(status === "SUBSCRIBED"));
+    })();
 
     return () => {
+      cancelled = true;
       clearTimeout(timer);
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [key, router]);
 

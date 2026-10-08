@@ -4,7 +4,8 @@ E-commerce for 3D-printed toys, 3D printers, filament and accessories (Vietnam m
 
 - **Stack:** Next.js 16 (App Router, Cache Components), Tailwind CSS 4, TypeScript, Supabase (Postgres + Auth + Storage + Realtime), Zustand (cart), Zod.
 - **Storefront:** home (hero, highlights, categories, promo banners, featured/new products), catalog with accent-insensitive search + filters (category, price, in stock, sort), product detail with gallery & spec table, cart, guest checkout (COD / bank transfer), contact page. SEO: metadata, Open Graph, JSON-LD (Store, WebSite, Product, BreadcrumbList), sitemap, robots.
-- **Admin (`/admin`):** dashboard, orders (status, payment, stock restore on cancel), products CRUD (images, specs), categories CRUD, site settings (brand/logo, contact, hero, homepage sections, promo banners, shipping fee, bank account). Every admin list refreshes live via Supabase Realtime.
+- **Admin (`/admin`):** dashboard, orders (status, payment, stock restore on cancel), products CRUD (images, specs), categories CRUD, site settings (brand/logo, contact + response-time promise + map coordinates, hero, homepage sections, promo banners, shipping fee, bank account, FAQ, privacy/returns policy pages). Every admin list refreshes live via Supabase Realtime.
+- **Launch extras:** sticky call/Zalo bar on mobile, Google Maps embed + directions, FAQPage schema, generated Open Graph image, optional GA4 via `NEXT_PUBLIC_GA_ID`.
 
 ## Setup
 

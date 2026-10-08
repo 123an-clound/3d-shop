@@ -3,7 +3,7 @@ import type { Settings, SettingsKey } from "./types";
 /** Fallbacks used when a settings row is missing; real values live in shop3d_settings. */
 export const DEFAULT_SETTINGS: Settings = {
   site: { name: "3D Shop", tagline: "", description: "", logo_url: "" },
-  contact: { phone: "", email: "", address: "", zalo: "", facebook: "", hours: "" },
+  contact: { phone: "", email: "", address: "", zalo: "", facebook: "", hours: "", response_time: "", lat: "", lng: "" },
   hero: { eyebrow: "", title: "3D Shop", subtitle: "", cta_label: "Xem sản phẩm", cta_href: "/san-pham", image_url: "" },
   banners: [],
   sections: {
@@ -18,6 +18,8 @@ export const DEFAULT_SETTINGS: Settings = {
   },
   shipping: { flat_fee: 30000, free_threshold: 1000000 },
   bank: { bank_name: "", account_number: "", account_name: "" },
+  faq: [],
+  policies: { privacy: "", returns: "" },
 };
 
 /** Merges DB rows over defaults so a field added in code never renders as undefined. */

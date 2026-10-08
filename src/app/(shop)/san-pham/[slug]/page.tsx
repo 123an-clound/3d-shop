@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 export async function generateMetadata(props: PageProps<"/san-pham/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
   const product = await getProductBySlug(slug);
-  if (!product) return { title: "Không tìm thấy sản phẩm", robots: { index: false } };
+  if (!product) return { title: "Không tìm thấy sản phẩm" }; // noindex comes from not-found.tsx
   return {
     title: product.name,
     description: product.short_description || product.description.slice(0, 160),

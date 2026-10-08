@@ -147,4 +147,23 @@ insert into public.shop3d_settings (key, value) values
 ('banners', '[{"title":"Máy in 3D giảm đến 15%","subtitle":"Tặng kèm 2 cuộn PLA khi mua máy trong tháng này","href":"/san-pham?danh-muc=may-in-3d","image_url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/3D_printer_farm_at_Hackerspace_Wroc%C5%82aw.jpg/1280px-3D_printer_farm_at_Hackerspace_Wroc%C5%82aw.jpg"},{"title":"Đồ chơi in 3D cho bé","subtitle":"Nhựa PLA an toàn, thiết kế độc quyền","href":"/san-pham?danh-muc=do-choi-in-3d","image_url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Altrum-3D_prints.jpg/1280px-Altrum-3D_prints.jpg"}]'),
 ('sections', '{"show_categories":true,"show_featured":true,"show_banners":true,"show_new":true,"show_highlights":true,"featured_title":"Sản phẩm nổi bật","new_title":"Hàng mới về","highlights":[{"title":"Giao hàng toàn quốc","text":"Miễn phí vận chuyển cho đơn từ 1.000.000đ"},{"title":"Bảo hành chính hãng","text":"Máy in bảo hành 12 tháng, đổi mới 7 ngày"},{"title":"Hỗ trợ kỹ thuật","text":"Hướng dẫn cài đặt, cân chỉnh máy miễn phí"},{"title":"In theo yêu cầu","text":"Nhận in mô hình, quà tặng theo file của bạn"}]}'),
 ('shipping', '{"flat_fee":30000,"free_threshold":1000000}'),
-('bank', '{"bank_name":"Vietcombank","account_number":"0000000000","account_name":"PRINT3D SHOP"}');
+('bank', '{"bank_name":"Vietcombank","account_number":"0000000000","account_name":"PRINT3D SHOP"}'),
+-- FAQ and the returns policy are business content: left empty for the owner to fill in via Admin.
+('faq', '[]'),
+('policies', jsonb_build_object('returns', '', 'privacy', $p$1. Thông tin chúng tôi thu thập
+Khi bạn đặt hàng, chúng tôi thu thập: họ tên, số điện thoại, địa chỉ nhận hàng, email (nếu bạn cung cấp) và ghi chú đơn hàng. Website không yêu cầu tạo tài khoản và không thu thập thông tin thẻ thanh toán.
+
+2. Mục đích sử dụng
+Thông tin chỉ được dùng để xác nhận, giao hàng, hỗ trợ sau bán hàng và liên hệ khi có vấn đề với đơn hàng. Chúng tôi không bán hoặc chia sẻ thông tin cá nhân cho bên thứ ba vì mục đích quảng cáo.
+
+3. Chia sẻ thông tin
+Tên, số điện thoại và địa chỉ được cung cấp cho đơn vị vận chuyển để giao hàng. Dữ liệu được lưu trữ trên hạ tầng máy chủ có mã hóa và phân quyền truy cập; chỉ quản trị viên cửa hàng được xem đơn hàng.
+
+4. Lưu trữ trên trình duyệt
+Giỏ hàng được lưu trên trình duyệt của bạn (localStorage) để giữ sản phẩm giữa các lần truy cập. Bạn có thể xóa bằng cách xóa dữ liệu duyệt web.
+
+5. Thời gian lưu trữ
+Thông tin đơn hàng được lưu trong thời gian cần thiết cho việc bảo hành, đổi trả và nghĩa vụ kế toán theo quy định pháp luật.
+
+6. Quyền của bạn
+Bạn có quyền yêu cầu xem, chỉnh sửa hoặc xóa thông tin cá nhân của mình bằng cách liên hệ qua số điện thoại hoặc email trên trang Liên hệ. Chính sách này tuân theo Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.$p$));

@@ -316,5 +316,8 @@ create policy "shop3d admin update media" on storage.objects
   for update to authenticated using (bucket_id = 'shop3d-media' and (select public.shop3d_is_admin()));
 create policy "shop3d admin delete media" on storage.objects
   for delete to authenticated using (bucket_id = 'shop3d-media' and (select public.shop3d_is_admin()));
+-- Storage remove/replace must first see the object; public URLs keep working without this policy.
+create policy "shop3d admin read media" on storage.objects
+  for select to authenticated using (bucket_id = 'shop3d-media' and (select public.shop3d_is_admin()));
 
 -- Admin emails are added per environment (see README "Admin access"), never committed.
